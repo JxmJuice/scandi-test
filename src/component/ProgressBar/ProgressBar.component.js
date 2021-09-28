@@ -8,7 +8,7 @@ class ProgressBar extends React.PureComponent {
     });
     let lastFilled = "";
     console.log(currentIndex, this.props.steps.length);
-    if (currentIndex === this.props.steps.length) {
+    if (currentIndex === this.props.steps.length - 1) {
       lastFilled = "filled";
     }
     return (
@@ -16,13 +16,19 @@ class ProgressBar extends React.PureComponent {
         <div className="ProgressBar__first-bar filled"></div>
         {this.props.titles.map((title, index) => {
           let filled = "";
-          if (index < currentIndex) {
-            filled = "filled";
-          }
-          let content = index + 1;
           let betweenBar = null;
-          if (index < currentIndex) {
+          let content = index + 1;
+          if (
+            index < currentIndex ||
+            currentIndex === this.props.steps.length - 1
+          ) {
+            filled = "filled";
             content = "✓";
+            if (index === this.props.steps.length - 1) {
+              filled = "filled filled-delay";
+            }
+          }
+          if (index < currentIndex) {
             betweenBar = (
               <div className="ProgressBar__between-bar filled"></div>
             );
